@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import vid from "../assets/videoplayback.webm";
+import vid from "../assets/videoplayback (1).mp4";
 
 const Home = () => {
   return (
