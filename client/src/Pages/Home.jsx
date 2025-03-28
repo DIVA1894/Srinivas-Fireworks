@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import vid from "../assets/videoplayback (1).mp4";
+import { ShinyButton } from "../Components/magicui/shiny-button";
 
 const Home = () => {
   return (
