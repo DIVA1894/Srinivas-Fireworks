@@ -37,12 +37,12 @@ const Navbar = () => {
         <div>
           <h1 className={`text-3xl font-bold transition-all duration-300 ${
             isHomePage && !isScrolled ? 'text-white' : 'text-black'
-          }`} style={{fontFamily : "'Eagle Lake',serif"}}>
+          }`} style={{fontFamily : "'Tektur',serif"}}>
             Srinivas Fireworks
           </h1>
         </div>
         <div>
-          <ul className={`text-xl font-semibold flex gap-5 transition-all duration-300 ${
+          <ul style={{fontFamily:"'poppins',serif"}} className={`text-xl font-semibold flex gap-5 transition-all duration-300 ${
             isHomePage && !isScrolled ? 'text-white' : 'text-black'
           }`}>
             <Link to="/" className='hover:text-red-300 cursor-pointer transition-all'>Home</Link>
