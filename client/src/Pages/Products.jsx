@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import Order from "./Order";
 import axios from "axios";
 
 const CrackersPage = () => {
   const [groupedCrackers, setGroupedCrackers] = useState({});
   const [quantities, setQuantities] = useState({});
+  const [showOrderPopup, setShowOrderPopup] = useState(false);
 
   useEffect(() => {
     axios
@@ -31,15 +33,49 @@ const CrackersPage = () => {
     );
   };
 
+  const getSelectedItems = () => {
+    const selected = [];
+
+    Object.entries(quantities).forEach(([id, { quantity, price }]) => {
+      if (quantity > 0) {
+        const cracker = Object.values(groupedCrackers)
+          .flat()
+          .find((item) => item._id === id);
+
+        if (cracker) {
+          selected.push({
+            name: cracker.name,
+            quantity,
+            price,
+            total: price * quantity,
+          });
+        }
+      }
+    });
+
+    return selected;
+  };
+
+  const handleCheckout = () => {
+    const selectedItems = getSelectedItems();
+    if (selectedItems.length === 0) {
+      alert("Please select at least one item.");
+      return;
+    }
+    setShowOrderPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowOrderPopup(false);
+  };
+
   return (
-    <div className="pt-16 px-8">
+    <div className="pt-16 px-8 relative">
       <div className="p-6 bg-gradient-to-br from-yellow-50 to-red-50 min-h-screen">
-        {/* 🧾 Display Total Amount on Top */}
         <div className="sticky top-18 bg-green-200 text-green-900 font-bold p-4 rounded-md shadow-md text-center text-2xl mb-6">
           💰 Total Amount: ₹{getGrandTotal()}
         </div>
 
-        {/* 🎆 Crackers Tables by Type */}
         {Object.keys(groupedCrackers).map((type) => (
           <div key={type} className="mb-12">
             <h2 className="text-3xl font-extrabold text-red-600 mb-6 border-l-4 border-red-500 pl-3">
@@ -103,9 +139,38 @@ const CrackersPage = () => {
             </div>
           </div>
         ))}
+
+        <div className="text-center mt-10">
+          <button
+            onClick={handleCheckout}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg text-xl shadow-lg"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
       </div>
+
+      {/* Order Popup Modal */}
+      {showOrderPopup && (
+        <div
+          className="fixed inset-0 bg-[rgba(0,0,0,0.48)] flex items-center justify-center z-50"
+          onClick={closePopup}
+        >
+          <div
+            className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Order
+              selectedItems={getSelectedItems()}
+              totalAmount={getGrandTotal()}
+              closePopup={closePopup}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default CrackersPage;
+
