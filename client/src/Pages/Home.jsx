@@ -4,6 +4,9 @@ import vid from "../assets/videoplayback (1).mp4";
 import { ShinyButton } from "../Components/magicui/shiny-button";
 import { MagicCard } from "../Components/magicui/magic-card";
 import door from "../assets/fast-delivery.png";
+import pay from "../assets/payment-method.png";
+import sup from "../assets/support.png";
+import TestimonialCard from "./TestimonialCard";
 
 const Home = () => {
   return (
@@ -22,7 +25,7 @@ const Home = () => {
         <div className="absolute top-0 left-0 w-full h-screen bg-black/50 -z-5"></div>
         <div className="relative flex flex-col items-center justify-center h-full text-white text-center top-79">
           <h1
-            style={{ fontFamily: "'poppins',serif" }}
+            style={{ fontFamily: "'Poppins',serif" }}
             className="text-5xl font-bold"
           >
             Welcome to Srinivas Fireworks
@@ -49,20 +52,18 @@ const Home = () => {
           </MagicCard>
 
           <MagicCard className="p-6 rounded-lg shadow-lg text-center flex flex-col items-center justify-center">
-          <div className="flex justify-center">
-              <img src={door} className="h-[80px]" alt="Doorstep Delivery" />
+            <div className="flex justify-center">
+              <img src={sup} className="h-[80px]" alt="Doorstep Delivery" />
             </div>
-            <h1 className="text-3xl font-bold m-2">
-              24/7 Customer Support
-            </h1>
+            <h1 className="text-3xl font-bold m-2">24/7 Customer Support</h1>
             <p className="text-xl">
               Our team is available round the clock to assist you with orders,
               recommendations, and queries.
             </p>
           </MagicCard>
           <MagicCard className="p-6 rounded-lg shadow-lg text-center flex flex-col items-center justify-center">
-          <div className="flex justify-center">
-              <img src={door} className="h-[80px]" alt="Doorstep Delivery" />
+            <div className="flex justify-center">
+              <img src={pay} className="h-[80px]" alt="Doorstep Delivery" />
             </div>
             <h1 className="text-3xl text-center font-bold m-2">
               Easy & Secure Payments
@@ -72,6 +73,29 @@ const Home = () => {
               experience.
             </p>
           </MagicCard>
+        </div>
+      </div>
+
+      <div className="">
+        <div className="bg-yellow-200 text-center p-4 rounded shadow mx-6">
+          <h2 className="text-2xl font-bold">🎉 Diwali Sale is Live!</h2>
+          <p>Get up to 50% off on selected fireworks. Hurry up!</p>
+        </div>
+      </div>
+
+      <div className="my-5">
+        <h2 className="text-3xl font-bold text-center mt-10 mb-4">
+          ❤️ What Our Customers Say
+        </h2>
+        <div className="flex flex-col md:flex-row gap-4 justify-center px-6">
+          <TestimonialCard
+            name="Ravi"
+            text="Best prices and super-fast delivery!"
+          />
+          <TestimonialCard
+            name="Meena"
+            text="Safe and vibrant fireworks. Loved it!"
+          />
         </div>
       </div>
     </div>

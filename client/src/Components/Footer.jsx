@@ -42,7 +42,7 @@ const Footer = () => {
         {/* Contact Section */}
         <div>
           <h2 className="text-xl font-bold mb-4">Contact Us</h2>
-          <p className="text-gray-400">📍 Kovilpatti, Tamil Nadu, India</p>
+          <p className="text-gray-400">📍 Sivakasi, Tamil Nadu, India</p>
           <p className="text-gray-400">📞 +91 98765 43210</p>
           <p className="text-gray-400">📧 support@srinivasfireworks.com</p>
         </div>

@@ -46,8 +46,8 @@ const Navbar = () => {
             isHomePage && !isScrolled ? 'text-white' : 'text-black'
           }`}>
             <Link to="/" className='hover:text-red-300 cursor-pointer transition-all'>Home</Link>
-            <Link to="/cart" className='hover:text-red-300 cursor-pointer transition-all'>Shop</Link>
-            <Link to="/shop" className='hover:text-red-300 cursor-pointer transition-all'>Cart</Link>
+            <Link to="/products" className='hover:text-red-300 cursor-pointer transition-all'>Shop</Link>
+            <Link to="/cart" className='hover:text-red-300 cursor-pointer transition-all'>Cart</Link>
             <Link to="/contact" className='hover:text-red-300 cursor-pointer transition-all'>Contact</Link>
           </ul>
         </div>
