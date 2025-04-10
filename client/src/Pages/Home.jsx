@@ -27,15 +27,15 @@ const Home = () => {
           </h1>
           <p className="mt-2 text-lg">Explore our wide range of fireworks.</p>
           <Link to="/products">
-            <ShinyButton className="mt-5 bg-green-300 cursor-pointer hover:scale-105 transition-all px-4 py-2 rounded">
-              Shop Now
+            <ShinyButton className="mt-5 transparent cursor-pointer hover:scale-105 transition-all px-4 py-2 rounded">
+              <h1 class="text-xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
+                Shop now
+              </h1>
             </ShinyButton>
           </Link>
         </div>
       </div>
-      <div className="">
-        
-      </div>
+      <div className=""></div>
     </div>
   );
 };
