@@ -7,6 +7,7 @@ import Cart from "./Pages/Cart";
 import Booking from "./Pages/Order";
 import Contact from "./Pages/Contact";
 import About from "./Pages/About";
+import Footer from "./Components/Footer";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

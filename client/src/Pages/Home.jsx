@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import vid from "../assets/videoplayback (1).mp4";
 import { ShinyButton } from "../Components/magicui/shiny-button";
+import { MagicCard } from "../Components/magicui/magic-card";
+import door from "../assets/fast-delivery.png";
 
 const Home = () => {
   return (
@@ -20,7 +22,7 @@ const Home = () => {
         <div className="absolute top-0 left-0 w-full h-screen bg-black/50 -z-5"></div>
         <div className="relative flex flex-col items-center justify-center h-full text-white text-center top-79">
           <h1
-            style={{ fontFamily: "'Courgette',serif" }}
+            style={{ fontFamily: "'poppins',serif" }}
             className="text-5xl font-bold"
           >
             Welcome to Srinivas Fireworks
