@@ -1,64 +1,97 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const products = [
-  { id: 1, name: "Rocket", price: 100 },
-  { id: 2, name: "Sparklers", price: 50 },
-  { id: 3, name: "Crackers", price: 150 },
-];
-
-const Products = ({ cart, setCart }) => {
+const CrackersPage = () => {
+  const [groupedCrackers, setGroupedCrackers] = useState({});
   const [quantities, setQuantities] = useState({});
 
-  const handleQuantityChange = (productId, value) => {
-    setQuantities({ ...quantities, [productId]: parseInt(value) || 1 });
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/crackers/getall-crackers")
+      .then((res) => {
+        setGroupedCrackers(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching crackers", err);
+      });
+  }, []);
+
+  const handleQuantityChange = (id, price, value) => {
+    const quantity = parseInt(value) || 0;
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: { quantity, price },
+    }));
   };
 
-  const addToCart = (product) => {
-    const quantity = quantities[product.id] || 1;
-    const existingItem = cart.find((item) => item.id === product.id);
-
-    if (existingItem) {
-      const updatedCart = cart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
-      );
-      setCart(updatedCart);
-    } else {
-      setCart([...cart, { ...product, quantity }]);
-    }
+  const getGrandTotal = () => {
+    return Object.values(quantities).reduce(
+      (total, item) => total + item.quantity * item.price,
+      0
+    );
   };
 
   return (
-    <div className="p-5">
-      <h2 className="text-2xl font-bold">Our Products</h2>
-      <div className="grid grid-cols-3 gap-4 mt-5">
-        {products.map((product) => (
-          <div key={product.id} className="p-4 border">
-            <h3>{product.name}</h3>
-            <p>₹{product.price}</p>
-            <input
-              type="number"
-              min="1"
-              defaultValue="1"
-              onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-              className="border p-1 w-16"
-            />
-            <button
-              onClick={() => addToCart(product)}
-              className="mt-2 bg-blue-500 text-white px-4 py-2 ml-2"
-            >
-              Add to Cart
-            </button>
-          </div>
-        ))}
+    <div className="p-4">
+      {/* 🧾 Display Total Amount on Top */}
+      <div className="sticky top-0 z-50 bg-green-100 text-green-800 font-semibold p-4 rounded-b shadow text-center text-xl">
+        Total Amount: ₹{getGrandTotal()}
       </div>
-      <Link to="/cart">
-        <button className="mt-5 bg-green-500 text-white px-4 py-2 rounded">
-          Go to Cart
-        </button>
-      </Link>
+
+      {/* 🎆 Crackers Tables by Type */}
+      {Object.keys(groupedCrackers).map((type) => (
+        <div key={type} className="mb-10">
+          <h2 className="text-2xl font-bold mb-4 text-gray-700">{type}</h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-300 text-center">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="border p-2">Image</th>
+                  <th className="border p-2">Name</th>
+                  <th className="border p-2">Price</th>
+                  <th className="border p-2">Quantity</th>
+                  <th className="border p-2">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupedCrackers[type].map((cracker) => {
+                  const { _id, image, name, price } = cracker;
+                  const qty = quantities[_id]?.quantity || 0;
+                  const total = qty * price;
+
+                  return (
+                    <tr key={_id}>
+                      <td className="border p-2">
+                        <img
+                          src={image}
+                          alt={name}
+                          className="h-20 w-20 object-cover mx-auto"
+                        />
+                      </td>
+                      <td className="border p-2">{name}</td>
+                      <td className="border p-2">₹{price}</td>
+                      <td className="border p-2">
+                        <input
+                          type="number"
+                          min="0"
+                          value={qty}
+                          onChange={(e) =>
+                            handleQuantityChange(_id, price, e.target.value)
+                          }
+                          className="w-16 border rounded px-2"
+                        />
+                      </td>
+                      <td className="border p-2">₹{total}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default Products;
+export default CrackersPage;
