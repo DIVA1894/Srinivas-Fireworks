@@ -119,11 +119,16 @@ const CrackersPage = () => {
                         </td>
                         <td className="p-4">
                           <input
-                            type="number"
-                            min="0"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             value={qty}
                             onChange={(e) =>
-                              handleQuantityChange(_id, price, e.target.value)
+                              handleQuantityChange(
+                                _id,
+                                price,
+                                e.target.value.replace(/\D/g, "")
+                              )
                             }
                             className="w-20 text-center border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-red-300"
                           />
@@ -173,4 +178,3 @@ const CrackersPage = () => {
 };
 
 export default CrackersPage;
-

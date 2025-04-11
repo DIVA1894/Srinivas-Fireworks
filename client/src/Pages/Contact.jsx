@@ -39,6 +39,8 @@ const Contact = () => {
         </form>
       </div>
 
+      
+
       <div className="text-center mt-5">
         <p>📞 Phone: +91 98765 43210</p>
         <p>📧 Email: contact@srinivasfireworks.com</p>
