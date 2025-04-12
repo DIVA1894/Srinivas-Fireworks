@@ -1,50 +1,65 @@
 import React from "react";
+import img from "../assets/Contact us.gif";
+import { FaUser, FaEnvelope, FaPhone, FaCommentDots } from "react-icons/fa";
 
 const Contact = () => {
   return (
-    <div className="p-5">
-      <h2 className="text-2xl font-bold text-center">Contact Us</h2>
-      <p className="text-center text-gray-600 mt-2">
-        Have questions? Reach out to us!
-      </p>
+    <div className="pt-20 px-4 min-h-screen flex items-center justify-center bg-gradient-to-br from-red-100 via-white to-red-200">
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        
+        <div className="flex justify-center">
+          <img src={img} alt="Contact Us" className="w-full max-w-md drop-shadow-xl" />
+        </div>
 
-      <div className="max-w-lg mx-auto mt-5 p-5 border rounded-lg shadow-lg">
-        <form className="flex flex-col space-y-4">
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="border p-2 w-full rounded"
-          />
-          <input
-            type="email"
-            placeholder="Your Email"
-            className="border p-2 w-full rounded"
-          />
-          <input
-            type="text"
-            placeholder="Your Phone Number"
-            className="border p-2 w-full rounded"
-          />
-          <textarea
-            placeholder="Your Message"
-            rows="4"
-            className="border p-2 w-full rounded"
-          ></textarea>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Send Message
-          </button>
-        </form>
-      </div>
+        <div className="bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-lg border border-white/30 transition hover:shadow-red-200">
+          <h2 className="text-3xl font-extrabold text-red-600 text-center mb-2" style={{ fontFamily: "'Tektur', cursive" }}>
+            Let’s Talk Fireworks! 🎆
+          </h2>
+          <p className="text-center text-gray-700 mb-6">
+            Fill out the form and we'll get back to you shortly.
+          </p>
 
-      
-
-      <div className="text-center mt-5">
-        <p>📞 Phone: +91 98765 43210</p>
-        <p>📧 Email: contact@srinivasfireworks.com</p>
-        <p>📍 Address: Sivakasi, Tamil Nadu, India</p>
+          <form className="flex flex-col gap-4">
+            <div className="flex items-center border rounded-md px-3 py-2 bg-white">
+              <FaUser className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="w-full outline-none bg-transparent"
+              />
+            </div>
+            <div className="flex items-center border rounded-md px-3 py-2 bg-white">
+              <FaEnvelope className="text-gray-500 mr-2" />
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full outline-none bg-transparent"
+              />
+            </div>
+            <div className="flex items-center border rounded-md px-3 py-2 bg-white">
+              <FaPhone className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                className="w-full outline-none bg-transparent"
+              />
+            </div>
+            <div className="flex items-start border rounded-md px-3 py-2 bg-white">
+              <FaCommentDots className="text-gray-500 mt-1 mr-2" />
+              <textarea
+                rows="3"
+                placeholder="Your Message"
+                className="w-full outline-none bg-transparent resize-none"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="bg-red-500 hover:bg-red-600 text-white py-3 rounded-full shadow-md transition duration-300"
+            >
+              Shoot Message 🎇
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
