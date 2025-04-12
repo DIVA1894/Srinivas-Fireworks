@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Catalogue from "../assets/catalogue.pdf";
 
 const SimpleNavbar = () => {
   const location = useLocation();
@@ -37,30 +38,32 @@ const SimpleNavbar = () => {
           Srinivas Fireworks
         </h1>
         <ul
-          className={`flex gap-6 text-lg font-medium transition-all duration-300 ${linkColor}`}
-          style={{ fontFamily: "'Poppins', sans-serif" }}
-        >
-          <li>
-            <Link to="/" className="hover:text-pink-300">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/products" className="hover:text-pink-300">
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link to="/cart" className="hover:text-pink-300">
-              Cart
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" className="hover:text-pink-300">
-              Contact
-            </Link>
-          </li>
-        </ul>
+  className={`flex gap-6 text-lg font-medium transition-all duration-300 ${linkColor}`}
+  style={{ fontFamily: "'Poppins', sans-serif" }}
+>
+  <li>
+    <Link to="/" className="hover:text-red-500">Home</Link>
+  </li>
+  <li>
+    <Link to="/products" className="hover:text-red-500">Products</Link>
+  </li>
+  <li>
+    <Link to="/cart" className="hover:text-red-500">Cart</Link>
+  </li>
+  <li>
+    <Link to="/contact" className="hover:text-red-500">Contact</Link>
+  </li>
+  <li>
+    <a
+      href={Catalogue}
+      download="catalogue.pdf"
+      className="hover:text-red-500"
+    >
+      Catalogue
+    </a>
+  </li>
+</ul>
+
       </div>
     </nav>
   );

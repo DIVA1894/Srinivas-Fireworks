@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // ✅ Properly import the plugin
+import autoTable from "jspdf-autotable"; 
 
 const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
   const [name, setName] = useState("");
@@ -98,7 +98,7 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
           setEmail("");
 
           if (typeof closePopup === "function") {
-            closePopup(); // ✅ Close the popup if provided
+            closePopup(); 
           }
         } catch (error) {
           console.error("Error saving payment/order:", error);
@@ -118,7 +118,6 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
-
   return (
     <div className="p-2 max-w-3xl mx-auto bg-white rounded-lg mt-3">
       <h2 className="text-2xl font-bold mb-4">Place Your Order</h2>
@@ -149,7 +148,6 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
         onChange={(e) => setAddress(e.target.value)}
         className="w-full border p-2 mb-4 rounded"
       ></textarea>
-
       <h4 className="text-lg font-semibold mb-2">Selected Items:</h4>
       <ul className="mb-4">
         {selectedItems.map((item, index) => (
@@ -158,9 +156,7 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
           </li>
         ))}
       </ul>
-
       <div className="text-xl font-bold mb-4">💰 Total: ₹{totalAmount}</div>
-
       <button
         onClick={handlePayment}
         disabled={!razorpayLoaded}

@@ -6,5 +6,4 @@ const CrackerSchema = new mongoose.Schema({
   image: String,
   crackerType: String,
 });
-
 module.exports = mongoose.model("Cracker", CrackerSchema);
