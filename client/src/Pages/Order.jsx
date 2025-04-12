@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; 
+import autoTable from "jspdf-autotable";
 
 const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
   const [name, setName] = useState("");
@@ -21,35 +21,26 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
 
   const generateInvoice = () => {
     const doc = new jsPDF();
-
-    doc.setFontSize(18);
-    doc.text("Srinivas Fireworks Invoice", 14, 22);
-
-    doc.setFontSize(12);
-    doc.text(`Customer Name: ${name}`, 14, 35);
-    doc.text(`Mobile: ${mobile}`, 14, 42);
-    doc.text(`Email: ${email}`, 14, 49);
-    doc.text(`Address: ${address}`, 14, 56);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 63);
-
-    const rows = selectedItems.map((item, i) => [
-      i + 1,
-      item.name,
-      item.quantity,
-      `₹${item.price}`,
-      `₹${item.total}`,
-    ]);
+    doc.text("🧾 Invoice - Srinivas Fireworks", 14, 15);
 
     autoTable(doc, {
-      head: [["S.No", "Item Name", "Qty", "Price", "Total"]],
-      body: rows,
-      startY: 70,
+      head: [["Product", "Quantity", "Price", "Total"]],
+      body: selectedItems.map((item) => [
+        item.name,
+        item.quantity,
+        `₹${item.price}`,
+        `₹${item.total}`,
+      ]),
     });
 
-    doc.setFontSize(14);
-    doc.text(`Grand Total: ₹${totalAmount}`, 14, doc.lastAutoTable.finalY + 10);
+    const y = doc.lastAutoTable.finalY || 30;
+    doc.text(`Total Amount: ₹${totalAmount}`, 14, y + 10);
+    doc.text(`Customer Name: ${name}`, 14, y + 20);
+    doc.text(`Phone: ${mobile}`, 14, y + 30);
+    doc.text(`Email: ${email}`, 14, y + 40);
+    doc.text(`Address: ${address}`, 14, y + 50);
 
-    doc.save(`Invoice_${name.replace(/\s+/g, "_")}_${Date.now()}.pdf`);
+    doc.save("invoice.pdf");
   };
 
   const handlePayment = async () => {
@@ -98,7 +89,7 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
           setEmail("");
 
           if (typeof closePopup === "function") {
-            closePopup(); 
+            closePopup();
           }
         } catch (error) {
           console.error("Error saving payment/order:", error);
@@ -118,6 +109,7 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
+
   return (
     <div className="p-2 max-w-3xl mx-auto bg-white rounded-lg mt-3">
       <h2 className="text-2xl font-bold mb-4">Place Your Order</h2>

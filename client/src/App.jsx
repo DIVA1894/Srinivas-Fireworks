@@ -18,7 +18,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
         <Route path="/products" element={<Products/>} />
-        <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+        {/* <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} /> */}
         <Route path="/booking" element={<Order />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
