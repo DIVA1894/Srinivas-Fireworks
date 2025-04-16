@@ -21,24 +21,36 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
 
   const generateInvoice = () => {
     const doc = new jsPDF();
-    doc.text("🧾 Invoice - Srinivas Fireworks", 14, 15);
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const title = "Invoice - Srinivas Fireworks";
+    doc.setFontSize(16);
+
+    const textWidth = doc.getTextWidth(title);
+    const x = (pageWidth - textWidth) / 2;
+
+    doc.text(title, x, 15);
+
+    doc.setFontSize(12);
+    doc.text(`Customer Name: ${name}`, 14, 30);
+    doc.text(`Phone: ${mobile}`, 14, 40);
+    doc.text(`Email: ${email}`, 14, 50);
+    doc.text(`Address: ${address}`, 14, 60);
 
     autoTable(doc, {
+      startY: 70,
       head: [["Product", "Quantity", "Price", "Total"]],
       body: selectedItems.map((item) => [
         item.name,
         item.quantity,
-        `₹${item.price}`,
-        `₹${item.total}`,
+        `Rs. ${item.price}`,
+        `Rs. ${item.total}`,
       ]),
     });
 
-    const y = doc.lastAutoTable.finalY || 30;
-    doc.text(`Total Amount: ₹${totalAmount}`, 14, y + 10);
-    doc.text(`Customer Name: ${name}`, 14, y + 20);
-    doc.text(`Phone: ${mobile}`, 14, y + 30);
-    doc.text(`Email: ${email}`, 14, y + 40);
-    doc.text(`Address: ${address}`, 14, y + 50);
+    const finalY = doc.lastAutoTable.finalY || 100;
+
+    doc.text(`Total Amount: Rs. ${totalAmount}`, 14, finalY + 10);
 
     doc.save("invoice.pdf");
   };
