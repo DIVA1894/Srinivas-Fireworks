@@ -54,7 +54,7 @@ const CrackersPage = () => {
   };
   const getFilteredCrackers = () => {
     if (!searchTerm.trim()) return groupedCrackers;
-  
+
     const filtered = {};
     Object.entries(groupedCrackers).forEach(([type, crackers]) => {
       const matched = crackers.filter((cracker) =>
@@ -64,7 +64,7 @@ const CrackersPage = () => {
         filtered[type] = matched;
       }
     });
-  
+
     return filtered;
   };
   const handleCheckout = () => {
@@ -81,24 +81,26 @@ const CrackersPage = () => {
   };
 
   return (
-    <div className="pt-16 px-8 relative">
-
+    <div className="pt-16 relative">
       <div className="p-6 bg-gradient-to-br from-yellow-50 to-red-50 min-h-screen">
-        <div className="sticky top-18 bg-transparent to-red-50 text-green-900 font-bold p-4 rounded-md text-center text-2xl mb-6">
-      <div className="mb-6 text-center">
-  <input
-    type="text"
-    placeholder="🔍 Search crackers by name..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="w-full max-w-xl px-4 py-2 text-lg bg-white border border-black-500 bg-red-100 text-black-800 placeholder-black-400 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black-400 transition duration-300"
-    />
-</div>
-          <h1 className="bg-red-700 w-96 ml-[480px] p-3 rounded-lg text-white text-center">💰 Total Amount: ₹{getGrandTotal()}</h1>
+        <div className="sticky flex flex-col justify-center items-center top-18 bg-transparent to-red-50 text-green-900 font-bold p-4 rounded-md text-center text-2xl mb-6">
+          <div className="mb-6 text-center">
+            <input
+              type="text"
+              placeholder="🔍 Search crackers by name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full max-w-xl px-4 py-2 text-lg bg-white border border-black-500 text-black-800 placeholder-black-400 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black-400 transition duration-300"
+            />
+          </div>
+          <div className="text-center">
+            <h1 className="bg-red-700 w-96 p-3 rounded-lg text-white">
+              💰 Total Amount: ₹{getGrandTotal()}
+            </h1>
+          </div>
         </div>
 
         {Object.keys(getFilteredCrackers()).map((type) => (
-
           <div key={type} className="mb-12">
             <h2 className="text-3xl font-extrabold text-red-600 mb-6 border-l-4 border-red-500 pl-3">
               🎇 {type}
@@ -115,8 +117,7 @@ const CrackersPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                {getFilteredCrackers()[type].map((cracker, index) => {
-
+                  {getFilteredCrackers()[type].map((cracker, index) => {
                     const { _id, image, name, price } = cracker;
                     const qty = quantities[_id]?.quantity || 0;
                     const total = qty * price;

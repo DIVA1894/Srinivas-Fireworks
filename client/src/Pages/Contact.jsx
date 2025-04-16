@@ -5,10 +5,10 @@ import { FaUser, FaEnvelope, FaPhone, FaCommentDots } from "react-icons/fa";
 const Contact = () => {
   return (
     <div className="pt-20 px-4 min-h-screen flex items-center justify-center bg-gradient-to-br from-red-100 via-white to-red-200">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 items-center">
         
         <div className="flex justify-center">
-          <img src={img} alt="Contact Us" className="w-full max-w-md drop-shadow-xl" />
+          <img src={img} alt="Contact Us" className="w-full max-md:hidden rounded-lg max-w-md drop-shadow-xl" />
         </div>
 
         <div className="bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-lg border border-white/30 transition hover:shadow-red-200">
