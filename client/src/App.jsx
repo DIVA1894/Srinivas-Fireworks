@@ -8,14 +8,12 @@ import About from "./Pages/About";
 import Footer from "./Components/Footer";
 
 function App() {
-
   return (
     <Router>
       <Navbar />
       <Routes>
-      <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
-        <Route path="/products" element={<Products/>} />
-        {/* <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
         <Route path="/booking" element={<Order />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
