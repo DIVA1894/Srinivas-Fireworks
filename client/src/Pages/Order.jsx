@@ -15,20 +15,17 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     script.onload = () => setRazorpayLoaded(true);
-    script.onerror = () => console.error("Razorpay SDK failed to load");
     document.body.appendChild(script);
   }, []);
 
   const generateInvoice = () => {
     const doc = new jsPDF();
-
     const pageWidth = doc.internal.pageSize.getWidth();
     const title = "Invoice - Srinivas Fireworks";
-    doc.setFontSize(16);
-
     const textWidth = doc.getTextWidth(title);
     const x = (pageWidth - textWidth) / 2;
 
+    doc.setFontSize(16);
     doc.text(title, x, 15);
 
     doc.setFontSize(12);
@@ -49,77 +46,76 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
     });
 
     const finalY = doc.lastAutoTable.finalY || 100;
-
     doc.text(`Total Amount: Rs. ${totalAmount}`, 14, finalY + 10);
-
     doc.save("invoice.pdf");
   };
 
   const handlePayment = async () => {
-    if (!razorpayLoaded) {
-      alert("Payment system is not ready yet. Please try again in a moment.");
-      return;
-    }
+    if (!razorpayLoaded) return alert("Razorpay not loaded yet.");
 
     if (!name || !mobile || !address || !email || selectedItems.length === 0) {
-      alert("Please fill all details and select items.");
-      return;
+      return alert("Please fill all details and select items.");
     }
 
-    const options = {
-      key: "rzp_test_4rdgre6savrrmw", // Replace with your Razorpay key
-      amount: totalAmount * 100,
-      currency: "INR",
-      name: "Srinivas Fireworks",
-      description: "Order Payment",
-      handler: async function (response) {
-        alert(`Payment successful: ${response.razorpay_payment_id}`);
+    try {
+      // Step 1: Place Order
+      const orderRes = await axios.post(
+        "http://localhost:5000/api/orders/place-order",
+        {
+          name,
+          phone: mobile,
+          email,
+          address,
+          items: selectedItems,
+        }
+      );
 
-        try {
+      const orderId = orderRes.data.order._id;
+
+      const options = {
+        key: "rzp_test_4rdgre6savrrmw", // Replace with your key
+        amount: totalAmount * 100,
+        currency: "INR",
+        name: "Srinivas Fireworks",
+        description: "Order Payment",
+        handler: async function (response) {
+          alert(`Payment successful: ${response.razorpay_payment_id}`);
+
           await axios.post("http://localhost:5000/api/payments/save-payment", {
+            orderId,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
             amount: totalAmount * 100,
+            currency: "INR",
             customer_name: name,
             customer_email: email,
           });
 
-          await axios.post("http://localhost:5000/api/orders/place-order", {
-            name,
-            phone: mobile,
-            address,
-            items: selectedItems,
-          });
-
-          generateInvoice(); // ✅ Generate invoice here
-
+          generateInvoice();
           alert("Order placed successfully!");
+
           setName("");
           setMobile("");
           setAddress("");
           setEmail("");
 
-          if (typeof closePopup === "function") {
-            closePopup();
-          }
-        } catch (error) {
-          console.error("Error saving payment/order:", error);
-          alert("Something went wrong. Please try again.");
-        }
-      },
-      prefill: {
-        name,
-        email,
-        contact: mobile,
-      },
-      theme: {
-        color: "#f37254",
-      },
-    };
+          if (typeof closePopup === "function") closePopup();
+        },
+        prefill: {
+          name,
+          email,
+          contact: mobile,
+        },
+        theme: { color: "#f37254" },
+      };
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error("Payment failed:", err);
+      alert("Error placing order or payment.");
+    }
   };
 
   return (

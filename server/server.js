@@ -5,6 +5,7 @@ const cors = require("cors");
 const crackerRoutes = require("./routes/crackers");
 const orderRoutes = require("./routes/order");
 const paymentRoutes = require("./routes/payment");
+const adminRoutes = require("./routes/admin");
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(cors());
 app.use("/api/crackers", crackerRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/admin", adminRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

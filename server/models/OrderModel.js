@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const OrderSchema = new mongoose.Schema({
   name: String,
   phone: String,
+  email: String,
   address: String,
   items: [
     {
@@ -12,8 +13,10 @@ const OrderSchema = new mongoose.Schema({
       total: Number,
     },
   ],
+  paymentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Payment",
+  },
 });
 
-const Order = mongoose.model("Order", OrderSchema);
-
-module.exports = Order;
+module.exports = mongoose.model("Order", OrderSchema);

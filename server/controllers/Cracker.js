@@ -1,6 +1,5 @@
 const Cracker = require("../models/CrackerModel");
 
-// Create a new cracker
 const createCracker = async (req, res) => {
   try {
     const newCracker = new Cracker(req.body);

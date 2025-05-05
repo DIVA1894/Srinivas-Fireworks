@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
 
 const PaymentSchema = new mongoose.Schema({
+  orderId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Order",
+  },
   razorpay_order_id: String,
   razorpay_payment_id: String,
   razorpay_signature: String,
   amount: Number,
-  currency: { type: String, default: "INR" },
-  status: { type: String, default: "Success" },
+  currency: {
+    type: String,
+    default: "INR",
+  },
   customer_name: String,
   customer_email: String,
-  date: { type: Date, default: Date.now },
 });
 
-const Payment = mongoose.model("Payment", PaymentSchema);
-
-module.exports = Payment;
+module.exports = mongoose.model("Payment", PaymentSchema);
