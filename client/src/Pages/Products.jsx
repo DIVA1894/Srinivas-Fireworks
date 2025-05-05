@@ -96,7 +96,7 @@ const CrackersPage = () => {
               placeholder="🔍 Search crackers by name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full max-w-xl px-4 py-2 text-lg bg-white border border-black-500 bg-red-100 text-black-800 placeholder-black-400 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black-400 transition duration-300"
+              className="w-full max-w-xl px-4 py-2 text-lg bg-white border border-black-500 text-black-800 placeholder-black-400 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black-400 transition duration-300"
             />
           </div>
           <h1 className="bg-red-700 w-96 ml-[480px] p-3 rounded-lg text-white text-center">
@@ -151,20 +151,46 @@ const CrackersPage = () => {
                               Out of Stock
                             </span>
                           ) : (
-                            <input
-                              type="text"
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              value={qty}
-                              onChange={(e) =>
-                                handleQuantityChange(
-                                  _id,
-                                  price,
-                                  e.target.value.replace(/\D/g, "")
-                                )
-                              }
-                              className="w-20 text-center border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-red-300"
-                            />
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    _id,
+                                    price,
+                                    Math.max(0, qty - 1)
+                                  )
+                                }
+                                className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                              >
+                                −
+                              </button>
+                              <input
+                                type="number"
+                                min="0"
+                                max={stock}
+                                value={qty}
+                                onChange={(e) =>
+                                  handleQuantityChange(
+                                    _id,
+                                    price,
+                                    parseInt(e.target.value) || 0
+                                  )
+                                }
+                                className="w-16 text-center border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-200 shadow-sm"
+                              />
+                              <button
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    _id,
+                                    price,
+                                    Math.min(stock, qty + 1)
+                                  )
+                                }
+                                className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                              >
+                                +
+                              </button>
+                            </div>
                           )}
                         </td>
                         <td className="p-4 text-blue-800 font-semibold">
@@ -189,7 +215,6 @@ const CrackersPage = () => {
         </div>
       </div>
 
-      {/* Order Popup Modal */}
       {showOrderPopup && (
         <div
           className="fixed inset-0 bg-[rgba(0,0,0,0.48)] flex items-center justify-center z-50"
