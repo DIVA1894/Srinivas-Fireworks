@@ -34,7 +34,7 @@ const getCrackerById = async (req, res) => {
 const updateCracker = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, image, crackerType } = req.body;
+    const { name, price, image, crackerType, stock } = req.body;
 
     const updatedCracker = await Cracker.findByIdAndUpdate(
       id,
@@ -43,8 +43,9 @@ const updateCracker = async (req, res) => {
         price,
         image,
         crackerType,
+        stock,
       },
-      { new: true } // Return the updated document
+      { new: true } 
     );
 
     if (!updatedCracker) {

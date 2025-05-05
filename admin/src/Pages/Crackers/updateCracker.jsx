@@ -9,6 +9,7 @@ const UpdateCracker = () => {
     price: "",
     image: "",
     crackerType: "",
+    stock: "",
   });
   const navigate = useNavigate();
 
@@ -38,7 +39,10 @@ const UpdateCracker = () => {
   const handleUpdateCracker = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/admin/update-cracker/${id}`, cracker);
+      await axios.put(
+        `http://localhost:5000/api/admin/update-cracker/${id}`,
+        cracker
+      );
       navigate("/admin/crackers");
     } catch (err) {
       console.error("Error updating cracker:", err);
@@ -80,6 +84,14 @@ const UpdateCracker = () => {
             value={cracker.crackerType}
             onChange={handleChange}
             placeholder="Cracker Type"
+            className="mb-4 p-2 border border-gray-300 rounded-md w-full"
+          />
+          <input
+            type="number"
+            name="stock"
+            value={cracker.stock}
+            onChange={handleChange}
+            placeholder="Stock Quantity"
             className="mb-4 p-2 border border-gray-300 rounded-md w-full"
           />
         </div>

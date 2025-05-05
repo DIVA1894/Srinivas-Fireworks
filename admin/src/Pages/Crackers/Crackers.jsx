@@ -83,11 +83,15 @@ const Crackers = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-bold">{cracker.name}</h3>
-                  <p className="text-green-600 font-semibold">
-                    ₹{cracker.price}
-                  </p>
-
+                    <h3 className="text-lg font-bold">{cracker.name}</h3>
+                  <div className="flex gap-[250px]">
+                    <p className="text-green-600 font-semibold">
+                      ₹{cracker.price}
+                    </p>
+                    <p className="text-lg text-gray-600 font-bold mt-1">
+                      Stock: {cracker.stock}
+                    </p>
+                  </div>
                   <div className="flex justify-between mt-4">
                     <button
                       onClick={() => handleUpdateClick(cracker._id)}

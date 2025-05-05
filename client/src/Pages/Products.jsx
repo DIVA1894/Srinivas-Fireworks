@@ -7,6 +7,7 @@ const CrackersPage = () => {
   const [quantities, setQuantities] = useState({});
   const [showOrderPopup, setShowOrderPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/crackers/getall-crackers")
@@ -17,6 +18,7 @@ const CrackersPage = () => {
         console.error("Error fetching crackers", err);
       });
   }, []);
+
   const handleQuantityChange = (id, price, value) => {
     const quantity = parseInt(value) || 0;
     setQuantities((prev) => ({
@@ -24,12 +26,14 @@ const CrackersPage = () => {
       [id]: { quantity, price },
     }));
   };
+
   const getGrandTotal = () => {
     return Object.values(quantities).reduce(
       (total, item) => total + item.quantity * item.price,
       0
     );
   };
+
   const getSelectedItems = () => {
     const selected = [];
 
@@ -39,7 +43,7 @@ const CrackersPage = () => {
           .flat()
           .find((item) => item._id === id);
 
-        if (cracker) {
+        if (cracker && cracker.stock > 0) {
           selected.push({
             name: cracker.name,
             quantity,
@@ -52,9 +56,10 @@ const CrackersPage = () => {
 
     return selected;
   };
+
   const getFilteredCrackers = () => {
     if (!searchTerm.trim()) return groupedCrackers;
-  
+
     const filtered = {};
     Object.entries(groupedCrackers).forEach(([type, crackers]) => {
       const matched = crackers.filter((cracker) =>
@@ -64,9 +69,10 @@ const CrackersPage = () => {
         filtered[type] = matched;
       }
     });
-  
+
     return filtered;
   };
+
   const handleCheckout = () => {
     const selectedItems = getSelectedItems();
     if (selectedItems.length === 0) {
@@ -82,23 +88,23 @@ const CrackersPage = () => {
 
   return (
     <div className="pt-16 px-8 relative">
-
       <div className="p-6 bg-gradient-to-br from-yellow-50 to-red-50 min-h-screen">
-        <div className="sticky top-18 bg-transparent to-red-50 text-green-900 font-bold p-4 rounded-md text-center text-2xl mb-6">
-      <div className="mb-6 text-center">
-  <input
-    type="text"
-    placeholder="🔍 Search crackers by name..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="w-full max-w-xl px-4 py-2 text-lg bg-white border border-black-500 bg-red-100 text-black-800 placeholder-black-400 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black-400 transition duration-300"
-    />
-</div>
-          <h1 className="bg-red-700 w-96 ml-[480px] p-3 rounded-lg text-white text-center">💰 Total Amount: ₹{getGrandTotal()}</h1>
+        <div className="sticky top-18 bg-transparent text-green-900 font-bold p-4 rounded-md text-center text-2xl mb-6">
+          <div className="mb-6 text-center">
+            <input
+              type="text"
+              placeholder="🔍 Search crackers by name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full max-w-xl px-4 py-2 text-lg bg-white border border-black-500 bg-red-100 text-black-800 placeholder-black-400 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-black-400 transition duration-300"
+            />
+          </div>
+          <h1 className="bg-red-700 w-96 ml-[480px] p-3 rounded-lg text-white text-center">
+            💰 Total Amount: ₹{getGrandTotal()}
+          </h1>
         </div>
 
         {Object.keys(getFilteredCrackers()).map((type) => (
-
           <div key={type} className="mb-12">
             <h2 className="text-3xl font-extrabold text-red-600 mb-6 border-l-4 border-red-500 pl-3">
               🎇 {type}
@@ -115,18 +121,18 @@ const CrackersPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                {getFilteredCrackers()[type].map((cracker, index) => {
-
-                    const { _id, image, name, price } = cracker;
+                  {getFilteredCrackers()[type].map((cracker, index) => {
+                    const { _id, image, name, price, stock } = cracker;
                     const qty = quantities[_id]?.quantity || 0;
                     const total = qty * price;
+                    const isOutOfStock = stock === 0;
 
                     return (
                       <tr
                         key={_id}
                         className={`hover:bg-yellow-50 ${
                           index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        }`}
+                        } ${isOutOfStock ? "opacity-50" : ""}`}
                       >
                         <td className="p-4">
                           <img
@@ -140,20 +146,26 @@ const CrackersPage = () => {
                           ₹{price}
                         </td>
                         <td className="p-4">
-                          <input
-                            type="text"
-                            inputMode="numeric"
-                            pattern="[0-9]*"
-                            value={qty}
-                            onChange={(e) =>
-                              handleQuantityChange(
-                                _id,
-                                price,
-                                e.target.value.replace(/\D/g, "")
-                              )
-                            }
-                            className="w-20 text-center border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-red-300"
-                          />
+                          {isOutOfStock ? (
+                            <span className="text-red-600 font-semibold">
+                              Out of Stock
+                            </span>
+                          ) : (
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              pattern="[0-9]*"
+                              value={qty}
+                              onChange={(e) =>
+                                handleQuantityChange(
+                                  _id,
+                                  price,
+                                  e.target.value.replace(/\D/g, "")
+                                )
+                              }
+                              className="w-20 text-center border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-red-300"
+                            />
+                          )}
                         </td>
                         <td className="p-4 text-blue-800 font-semibold">
                           ₹{total}
