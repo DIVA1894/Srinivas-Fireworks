@@ -4,7 +4,7 @@ import { FaFire, FaClipboardList, FaFileAlt } from "react-icons/fa";
 
 const AdminSidebar = () => {
   return (
-    <div className="h-screen w-64 bg-gray-800 text-white flex flex-col p-4 shadow-lg">
+    <div className="fixed h-screen w-64 bg-gray-800 text-white flex flex-col p-4 shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-center">Admin Panel</h2>
 
       <NavLink

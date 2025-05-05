@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="flex">
         <AdminSidebar />
-        <div className="flex-1 p-4">
+        <div className="flex-1 pl-[260px]">
           <Routes>
             <Route path="/" element={<CrackersPage />} />
             <Route path="/admin/crackers" element={<CrackersPage />} />

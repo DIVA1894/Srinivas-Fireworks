@@ -172,7 +172,9 @@ const SalesReport = () => {
         <h3 className="text-2xl font-semibold mb-4">
           Sales Distribution by Cracker
         </h3>
-        <Pie data={pieData} />
+        <div className="mx-auto" style={{ width: "250px", height: "250px" }}>
+          <Pie data={pieData} />
+        </div>
       </div>
 
       {/* Bar Chart */}
