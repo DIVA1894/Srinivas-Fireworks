@@ -11,7 +11,7 @@ function AdminLogin() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin-auth",
+        "https://srinivas-fireworks-backend.onrender.com/api/admin-auth",
         { code }
       );
       if (response.data.success) {

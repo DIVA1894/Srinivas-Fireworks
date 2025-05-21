@@ -10,7 +10,7 @@ const Crackers = () => {
   useEffect(() => {
     const fetchCrackers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/crackers");
+        const res = await axios.get("https://srinivas-fireworks-backend.onrender.com/api/admin/crackers");
         setGroupedCrackers(res.data);
         setLoading(false);
       } catch (err) {
@@ -33,7 +33,7 @@ const Crackers = () => {
   const handleDeleteClick = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/admin/delete-cracker/${id}`
+        `https://srinivas-fireworks-backend.onrender.com/api/admin/delete-cracker/${id}`
       );
       setGroupedCrackers((prevState) => {
         const newState = { ...prevState };

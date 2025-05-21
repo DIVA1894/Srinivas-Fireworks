@@ -60,7 +60,7 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
     try {
       // Step 1: Place Order
       const orderRes = await axios.post(
-        "http://localhost:5000/api/orders/place-order",
+        "https://srinivas-fireworks-backend.onrender.com/api/orders/place-order",
         {
           name,
           phone: mobile,
@@ -81,7 +81,7 @@ const Order = ({ selectedItems = [], totalAmount = 0, closePopup }) => {
         handler: async function (response) {
           alert(`Payment successful: ${response.razorpay_payment_id}`);
 
-          await axios.post("http://localhost:5000/api/payments/save-payment", {
+          await axios.post("https://srinivas-fireworks-backend.onrender.com/api/payments/save-payment", {
             orderId,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,

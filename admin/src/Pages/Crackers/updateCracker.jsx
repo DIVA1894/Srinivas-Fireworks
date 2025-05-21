@@ -17,7 +17,7 @@ const UpdateCracker = () => {
     const fetchCracker = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/admin/update-cracker/${id}`
+          `https://srinivas-fireworks-backend.onrender.com/api/admin/update-cracker/${id}`
         );
         setCracker(res.data);
       } catch (err) {
@@ -40,7 +40,7 @@ const UpdateCracker = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/update-cracker/${id}`,
+        `https://srinivas-fireworks-backend.onrender.com/api/admin/update-cracker/${id}`,
         cracker
       );
       navigate("/admin/crackers");

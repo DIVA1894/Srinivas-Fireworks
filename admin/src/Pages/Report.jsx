@@ -12,7 +12,6 @@ import {
   ArcElement,
 } from "chart.js";
 
-// Register chart components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -32,7 +31,7 @@ const SalesReport = () => {
     const fetchSalesReport = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/getreport"
+          "https://srinivas-fireworks-backend.onrender.com/api/admin/getreport"
         );
         setSalesData(response.data);
         console.log(response.data);

@@ -34,7 +34,7 @@ const getSalesReport = async (req, res) => {
         if (!item.name || !item.quantity || !item.price) continue;
 
         const crackerName = normalizeName(item.name);
-        const cracker = crackerMap[crackerName];
+        const cracker = crackerMap[crackerName];s 
 
         if (!cracker) {
           console.warn(`No cracker found for item: "${item.name}"`);

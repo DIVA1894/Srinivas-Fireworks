@@ -22,7 +22,7 @@ const AddCracker = () => {
   const handleAddCracker = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/admin/add-crackers",
+        "https://srinivas-fireworks-backend.onrender.com/api/admin/add-crackers",
         newCracker
       );
       navigate("/admin/crackers");

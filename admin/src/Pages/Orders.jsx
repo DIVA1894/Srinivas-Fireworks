@@ -5,7 +5,7 @@ function AllOrdersPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin/order") // ← Make sure this endpoint returns all orders
+    fetch("https://srinivas-fireworks-backend.onrender.com/api/admin/order") // ← Make sure this endpoint returns all orders
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.error("Error fetching orders:", err));

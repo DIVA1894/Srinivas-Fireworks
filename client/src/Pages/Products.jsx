@@ -10,7 +10,7 @@ const CrackersPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/crackers/getall-crackers")
+      .get("https://srinivas-fireworks-backend.onrender.com/api/crackers/getall-crackers")
       .then((res) => {
         setGroupedCrackers(res.data);
       })
